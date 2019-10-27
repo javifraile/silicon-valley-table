@@ -1,3 +1,4 @@
+jest.mock('fs');
 const request = require('supertest');
 const app = require('../src/app');
 
@@ -53,7 +54,6 @@ describe('Episodes List', () => {
         expect(res.body.episodes.length).toEqual(0);
     });
 });
-
 
 describe('Error 404', () => {
     it('should throw an error', async () => {
