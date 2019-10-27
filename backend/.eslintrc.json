@@ -19,6 +19,7 @@
         "linebreak-style": ["error", "windows"],
         "indent": ["error", 4],
         "no-console": "off",
-        "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
+        "no-unused-vars": ["error", { "argsIgnorePattern": "next" }],
+        "object-curly-newline": "off"
     }
 }
