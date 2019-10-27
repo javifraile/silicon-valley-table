@@ -23,6 +23,10 @@
     "rules": {
         "linebreak-style": ["error", "windows"],
         "indent": ["error", 4],
-        "react/jsx-indent": "off"
+        "object-curly-newline": "off",
+        "import/prefer-default-export": "off",
+        "react/jsx-indent": "off",
+        "react/jsx-indent-props": "off",
+        "react/prop-types": "off"
     }
 }
