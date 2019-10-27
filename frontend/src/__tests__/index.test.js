@@ -6,7 +6,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import App from '../App';
 import Table from '../Table';
-import { LOADING_MESSAGE } from '../utils/constants';
+import { LOADING_MESSAGE, NO_MATCHES_MESSAGE } from '../utils/constants';
 import { data } from '../__mocks__/episodeList';
 
 const { episodes } = data;
@@ -40,5 +40,26 @@ describe('Should show a list of episodes', () => {
             expect(children[episodeCounter].props.children[3].props.children).toEqual(number);
             episodeCounter++;
         }
+    });
+
+    it('should filter options', async () => {
+        testRenderer  = renderer.create(<App />);
+        testInstance = testRenderer.root;
+        await testInstance.instance.componentDidMount();
+        testInstance.instance.handleFilter({target: {name: 'season', value: 1}});
+        expect(testInstance.findByType(Table).props.episodes.length).toEqual(8);
+        testInstance.instance.handleFilter({target: {name: 'season', value: 0}});
+        expect(testInstance.findByType(Table).props.episodes.length).toEqual(38);
+        testInstance.instance.handleFilter({target: {name: 'season', value: 2}});
+        expect(testInstance.findByType(Table).props.episodes.length).toEqual(10);
+        testInstance.instance.handleFilter({target: {name: 'title', value: 'M'}});
+        expect(testInstance.findByType(Table).props.episodes.length).toEqual(1);
+        testInstance.instance.handleFilter({target: {name: 'season', value: 0}});
+        expect(testInstance.findByType(Table).props.episodes.length).toEqual(4);
+        testInstance.instance.handleFilter({target: {name: 'title', value: 'aa'}});
+        expect(testInstance.findByType(Table).props.episodes.length).toEqual(0);
+        expect(testInstance.findByType(TableBody).findByType(TableCell).props.children).toEqual(NO_MATCHES_MESSAGE);
+        testInstance.instance.handleFilter({target: {name: 'title', value: ''}});
+        expect(testInstance.findByType(Table).props.episodes.length).toEqual(38);
     });
 });
